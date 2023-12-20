@@ -1,23 +1,20 @@
 import React, {useEffect} from "react";
-import {Button, ConfigProvider, Switch} from "antd";
+import {ConfigProvider} from "antd";
 import {AxiosInit} from "./core/AxiosInit";
-import {useDispatch, useSelector} from "react-redux";
-import {useTranslation} from "react-i18next";
-import {getAccessToken, isUserAuthenticated} from "./store/auth";
+import {useSelector} from "react-redux";
+import {isUserAuthenticated} from "./store/auth";
 import viVN from 'antd/es/locale/vi_VN';
-import moment from "moment";
-import {BrowserRouter, Navigate, Route, useRoutes} from "react-router-dom";
-import {Dashboard} from "./pages/admin/dashboard/dashboard";
+import {BrowserRouter, Navigate, Route} from "react-router-dom";
 import {Routes} from "./core/routes";
 
 export const App = () => {
-    const dispatch = useDispatch();
-    const accessToken = useSelector(getAccessToken);
-
-    const locale = moment.locale('vi');
+    // const dispatch = useDispatch();
+    // const accessToken = useSelector(getAccessToken);
+    //
+    // const locale = moment.locale('vi');
     const isAuthenticated = useSelector(isUserAuthenticated)
-
-    const {t} = useTranslation();
+    //
+    // const {t} = useTranslation();
 
 
     useEffect(() => {
@@ -27,8 +24,7 @@ export const App = () => {
 
     return (
         <ConfigProvider locale={viVN}>
-            <BrowserRouter basename="/app">
-                <Route index={true} path='/' element={<Dashboard/>}/>
+            <BrowserRouter>
                 <Routes/>
             </BrowserRouter>
 

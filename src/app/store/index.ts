@@ -5,6 +5,7 @@ import authReducer from "./auth";
 import {thunk} from "redux-thunk";
 import {configureStore} from "@reduxjs/toolkit";
 import {IUserLogin} from "../common/model/user.model";
+import localStorage from 'redux-persist/lib/storage'
 
 export interface IAuthState extends IUserLogin {
     role: any[]
@@ -32,11 +33,11 @@ const persistConfig: PersistConfig<IAppState> = {
     key: 'root',
     storage: localStorage,
     blacklist: [],
-    stateReconciler: autoMergeLevel2,
+    stateReconciler: autoMergeLevel2
 }
 
 const rootReducers = combineReducers({
-    auth: authReducer
+    auth: authReducer.reducer
 })
 
 export const store = configureStore({
