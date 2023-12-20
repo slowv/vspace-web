@@ -6,8 +6,9 @@ import {useTranslation} from "react-i18next";
 import {getAccessToken, isUserAuthenticated} from "./store/auth";
 import viVN from 'antd/es/locale/vi_VN';
 import moment from "moment";
-import {BrowserRouter, Navigate, Route} from "react-router-dom";
-import {Dashboard} from "./pages/dashboard/dashboard";
+import {BrowserRouter, Navigate, Route, useRoutes} from "react-router-dom";
+import {Dashboard} from "./pages/admin/dashboard/dashboard";
+import {Routes} from "./core/routes";
 
 export const App = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const App = () => {
 
     const {t} = useTranslation();
 
+
     useEffect(() => {
         // Impl code here
     }, []);
@@ -27,6 +29,7 @@ export const App = () => {
         <ConfigProvider locale={viVN}>
             <BrowserRouter basename="/app">
                 <Route index={true} path='/' element={<Dashboard/>}/>
+                <Routes/>
             </BrowserRouter>
 
             {/*Tìm hiểu react router dom v6 để config setting route chỗ này*/}
