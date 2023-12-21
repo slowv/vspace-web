@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {isUserAuthenticated} from "./store/auth";
 import viVN from 'antd/es/locale/vi_VN';
 import {BrowserRouter, Navigate, Route} from "react-router-dom";
-import {Routes} from "./core/routes";
+import {MasterLayout} from "./common/component/layout/MasterLayout";
 
 export const App = () => {
     // const dispatch = useDispatch();
@@ -23,16 +23,26 @@ export const App = () => {
 
 
     return (
-        <ConfigProvider locale={viVN}>
-            <BrowserRouter>
-                <Routes/>
-            </BrowserRouter>
+        <React.StrictMode>
+            <ConfigProvider
+                locale={viVN}
+                theme={{
+                    cssVar: true,
+                    token: {
+                        colorBgContainer: '#fff',
+                        colorPrimary: '#00b96b',
+                    }
+                }}
+            >
+                <BrowserRouter>
+                    <MasterLayout/>
+                </BrowserRouter>
+                {/*Tìm hiểu react router dom v6 để config setting route chỗ này*/}
 
-            {/*Tìm hiểu react router dom v6 để config setting route chỗ này*/}
-
-            {/*Loading*/}
-            <AxiosInit/>
-        </ConfigProvider>
+                {/*Loading*/}
+                <AxiosInit/>
+            </ConfigProvider>
+        </React.StrictMode>
     );
 
 
@@ -61,7 +71,7 @@ export const App = () => {
     }
 
     function PublicRoute(props: any) {
-        const { component, ...rest } = props
+        const {component, ...rest} = props
 
         return (
             <Route
@@ -69,9 +79,8 @@ export const App = () => {
                 render={(props: any) =>
                     isAuthenticated ? (
                         <Navigate
-                            to={{
-                                pathname: '/',
-                            }}
+                            to='/'
+                            state={props.localtion}
                         />
                     ) : (
                         React.createElement(component, props)

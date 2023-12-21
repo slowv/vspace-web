@@ -5,7 +5,7 @@ import {NotFound} from "../pages/not-found/not-found";
 import {Products} from "../pages/admin/product/products";
 import {ProductDetail} from "../pages/admin/product/product-detail";
 
-export const Routes = () => {
+export const RouteRoot = () => {
     return useRoutes([
         {path: '/', element: <Home/>},
         {
@@ -29,8 +29,7 @@ export const Routes = () => {
             ]
         },
 
-
         // Not found routes work as you'd expect
-        { path: "*", element: <NotFound /> },
+        {path: "*", element: <NotFound/>},
     ])
 }
