@@ -1,11 +1,10 @@
-import React, {Key, ReactNode, useState} from "react";
-import {Breadcrumb, Layout, Menu, type MenuProps, theme} from "antd";
-import {Outlet, Route, useNavigate} from "react-router-dom";
+import React, {ComponentProps, Key, ReactNode, useState} from "react";
+import {Layout, Menu, type MenuProps, theme} from "antd";
+import {Outlet, useNavigate} from "react-router-dom";
 import {Logo} from "../logo/logo";
 import {HeaderMaster} from "../header/header-master";
 import {DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined} from "@ant-design/icons";
-import {RouteRoot} from "../../../core/routeRoot";
-const {Header, Content, Footer, Sider} = Layout;
+const {Content, Footer, Sider} = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -35,13 +34,13 @@ const items: MenuItem[] = [
     getItem('Files', '9', <FileOutlined/>),
 ];
 
-export const MasterLayout = () => {
+export const MasterLayout = (props: ComponentProps<any>) => {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: {colorBgContainer, borderRadiusLG},
     } = theme.useToken();
     const navigate = useNavigate();
-
+    const {children} = props;
 
     return (
         <Layout style={{minHeight: '100vh'}}>
@@ -66,7 +65,6 @@ export const MasterLayout = () => {
                             borderRadius: borderRadiusLG,
                         }}
                     >
-                        <RouteRoot/>
                         <Outlet/>
                     </div>
                 </Content>
@@ -75,3 +73,4 @@ export const MasterLayout = () => {
         </Layout>
     );
 }
+

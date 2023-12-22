@@ -1,92 +1,32 @@
-import React, {useEffect} from "react";
-import {ConfigProvider} from "antd";
-import {AxiosInit} from "./core/AxiosInit";
-import {useSelector} from "react-redux";
-import {isUserAuthenticated} from "./store/auth";
-import viVN from 'antd/es/locale/vi_VN';
-import {BrowserRouter, Navigate, Route} from "react-router-dom";
-import {MasterLayout} from "./common/component/layout/MasterLayout";
+import React from "react";
+import {Route, Routes} from "react-router-dom";
+import {Home} from "./pages/home/home";
+import {Dashboard} from "./pages/admin/dashboard/dashboard";
+import {Products} from "./pages/admin/product/products";
+import {ProductDetail} from "./pages/admin/product/product-detail";
+import {NotFound} from "./pages/not-found/not-found";
+import {RequireAuth} from "./core/RequireAuth";
+import {Login} from "./pages/admin/login/login";
+import {PublicRoute} from "./core/PublicRoute";
 
 export const App = () => {
-    // const dispatch = useDispatch();
-    // const accessToken = useSelector(getAccessToken);
-    //
-    // const locale = moment.locale('vi');
-    const isAuthenticated = useSelector(isUserAuthenticated)
-    //
-    // const {t} = useTranslation();
-
-
-    useEffect(() => {
-        // Impl code here
-    }, []);
-
-
     return (
-        <React.StrictMode>
-            <ConfigProvider
-                locale={viVN}
-                theme={{
-                    cssVar: true,
-                    token: {
-                        colorBgContainer: '#fff',
-                        colorPrimary: '#00b96b',
-                    }
-                }}
-            >
-                <BrowserRouter>
-                    <MasterLayout/>
-                </BrowserRouter>
-                {/*Tìm hiểu react router dom v6 để config setting route chỗ này*/}
+        <Routes>
+            <Route path={'/'} element={<Home/>}/>
 
-                {/*Loading*/}
-                <AxiosInit/>
-            </ConfigProvider>
-        </React.StrictMode>
-    );
+            <Route path={'admin'}>
+                <Route element={<PublicRoute/>}>
+                    <Route path={'/admin/login'} element={<Login/>}/>
+                </Route>
 
-
-// #######################################################################
-
-    function PrivateRoute(props: any) {
-        const {component, ...rest} = props;
-
-        return (
-            <Route
-                {...rest}
-                render={(props: any) =>
-                    isAuthenticated ? (
-                        React.createElement(component, props)
-                    ) : (
-                        <Navigate
-                            to={{
-                                pathname: '/login'
-                            }}
-                            state={""}
-                        />
-                    )
-                }
-            />
-        )
-    }
-
-    function PublicRoute(props: any) {
-        const {component, ...rest} = props
-
-        return (
-            <Route
-                {...rest}
-                render={(props: any) =>
-                    isAuthenticated ? (
-                        <Navigate
-                            to='/'
-                            state={props.localtion}
-                        />
-                    ) : (
-                        React.createElement(component, props)
-                    )
-                }
-            />
-        )
-    }
+                <Route element={<RequireAuth/>}>
+                    <Route path={'app'} element={<Dashboard/>}/>
+                    <Route path={'products'} element={<Products/>}>
+                        <Route path={':id'} element={<ProductDetail/>}/>
+                    </Route>
+                </Route>
+            </Route>
+            <Route path={'*'} element={<NotFound/>}/>
+        </Routes>
+    )
 }

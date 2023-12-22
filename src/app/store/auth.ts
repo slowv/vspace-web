@@ -11,7 +11,7 @@ const initialState: IAuthState = {
     createdDate: '',
     status: '',
     phoneNumber: '',
-    isAuthenticated: false,
+    isAuthenticated: true,
     accountNumber: '',
     address: '',
     languageCode: '',
