@@ -57,15 +57,7 @@ export const MasterLayout = () => {
             </Sider>
             <Layout>
                 <HeaderMaster/>
-                <Content style={{margin: '0 16px'}}>
-                    <Breadcrumb
-                        style={{margin: '16px 0'}}
-                        items={[
-                            {title: 'Admin'},
-                            {title: <a href='' onClick={() => navigate('/admin/app')}>Dashboard</a>}
-                        ]}
-                    />
-
+                <Content style={{margin: '20px 16px 0'}}>
                     <div
                         style={{
                             padding: 24,
